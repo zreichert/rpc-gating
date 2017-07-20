@@ -77,6 +77,7 @@ def getPubCloudSlave(Map args){
         region: env.REGION,
         flavor: env.FLAVOR,
         image: env.IMAGE,
+        extra_create_args: env.EXTRA_CREATE_ARGS,
         keyname: "jenkins",
       )
     } //stage

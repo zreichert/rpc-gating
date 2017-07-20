@@ -12,6 +12,7 @@
           count: "{{ count }}"
           key_name: "{{ keyname }}"
           region: "{{ region }}"
+          extra_create_args: "{{ extra_create_args or omit }}"
           wait: yes
           wait_timeout: 900
           auto_increment: no
