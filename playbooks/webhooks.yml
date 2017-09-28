@@ -16,6 +16,8 @@
   hosts: job_nodes
   user: root
   vars:
+    # GITHUB_CIDR is not currently used. The github port is open to all
+    # but protected by path restrictions and basic auth.
     GITHUB_CIDR: "192.30.252.0/22"
     GITHUB_HOOK_PORT: 80
 
@@ -97,7 +99,6 @@
       ufw:
         rule: allow
         port: "{{ GITHUB_HOOK_PORT }}"
-        src: "{{GITHUB_CIDR }}"
 
     # Configure Nginx. (apache2-utils only used to create htpasswd file)
 
