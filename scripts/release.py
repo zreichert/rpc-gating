@@ -57,6 +57,7 @@ def generate_release_notes(scripts, rnfile, text, version, prev_version,
     ctx_obj = click.get_current_context().obj
     version = try_context(ctx_obj, version, "version", "version")
     clone_dir = try_context(ctx_obj, clone_dir, "clone_dir", "clone_dir")
+    logger.debug("{}".format(ctx_obj.ssh_url))
     os.system("mkdir -p {}".format(os.path.dirname(dst_file)))
     if scripts:
         version = try_context(ctx_obj, version, "version", "version")
