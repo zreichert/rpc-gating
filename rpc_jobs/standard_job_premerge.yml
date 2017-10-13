@@ -9,6 +9,12 @@
       - "functional"
     action:
       - "test"
+    credentials:
+      - credentials-binding:
+          - username-password-separated:
+             credential-id: b3e6f337-5d44-4f57-921c-1632d796caae
+             username: myUsername
+             password: myPassword
     jobs:
       - 'PR_{name}-{image}-{scenario}-{action}'
 
@@ -44,6 +50,8 @@
               Connect Slave
               Cleanup
               Destroy Slave
+    wrappers:
+      {credentials}
     triggers:
       - github-pull-request:
           org-list:
