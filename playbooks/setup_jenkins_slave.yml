@@ -31,6 +31,9 @@
         PrintLastLog: "no"
         GatewayPorts: "yes"
         Compression: "yes"
+        ClientAliveInterval: "60"
+        ClientAliveCountMax: "10"
+        TCPKeepAlive: "yes"
   tasks:
     - meta: flush_handlers
 
@@ -39,6 +42,8 @@
         delay: "{{ jenkins_wait_params.delay }}"
         timeout: "{{ jenkins_wait_params.timeout }}"
         sleep: "{{ jenkins_wait_params.sleep }}"
+
+    - meta: reset_connection
 
     - name: Install apt packages
       apt:
@@ -130,7 +135,6 @@
           retries: 3
           delay: 2
 
-
       # pip module didn't work here as it couldn't locate the virtualenv binary
     - name: Start slave
       delegate_to: localhost
@@ -149,4 +153,4 @@
       register: jenkins_response
       until: jenkins_response|success
       retries: 5
-      delay: 10
+      delay: 20
