@@ -21,16 +21,16 @@
       timeout: 180
       # Sleep 5 seonds between checks
       sleep: 5
-  roles:
-    - role: willshersystems.sshd
-      sshd:
-        ListenAddress:
-          - "0.0.0.0"
-        PasswordAuthentication: "no"
-        X11Forwarding: "no"
-        PrintLastLog: "no"
-        GatewayPorts: "yes"
-        Compression: "yes"
+#  roles:
+#    - role: willshersystems.sshd
+#      sshd:
+#        ListenAddress:
+#          - "0.0.0.0"
+#        PasswordAuthentication: "no"
+#        X11Forwarding: "no"
+#        PrintLastLog: "no"
+#        GatewayPorts: "yes"
+#        Compression: "yes"
   tasks:
     - meta: flush_handlers
 
