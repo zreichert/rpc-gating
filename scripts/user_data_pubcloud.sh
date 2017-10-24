@@ -20,4 +20,9 @@ else
     export DEBIAN_FRONTEND=noninteractive
     apt-get purge -y unattended-upgrades
 fi
+if [[ "${DISTRIB_CODENAME}" == "xenial" ]]; then
+    # Ensure ansible installed fully
+    apt-get update
+    apt-get install -y ansible python-simplejson
+fi
 exit 0
