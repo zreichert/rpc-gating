@@ -20,4 +20,10 @@ else
     export DEBIAN_FRONTEND=noninteractive
     apt-get purge -y unattended-upgrades
 fi
+if [[ "${DISTRIB_CODENAME}" == "xenial" ]]; then
+    # install python-minimal since xenial doesn't
+    # ship with 2.x
+    apt-get update
+    apt-get install -y python-minimal python-yaml
+fi
 exit 0
