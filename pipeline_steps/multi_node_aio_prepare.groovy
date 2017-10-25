@@ -61,6 +61,7 @@ def prepare() {
               "CONFIGURE_OPENSTACK=false",
               "DATA_DISK_DEVICE=${env.DATA_DISK_DEVICE}",
               "CONFIG_PREROUTING=true",
+              "DEPLOY_ARTIFACTING=no",
               "OSA_PORTS=6080 6082 443 80 8443",
               "ADDITIONAL_COMPUTE_NODES=${env.ADDITIONAL_COMPUTE_NODES}",
               "ADDITIONAL_VOLUME_NODES=${env.ADDITIONAL_VOLUME_NODES}",
