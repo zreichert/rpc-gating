@@ -1,0 +1,13 @@
+- project:
+    name:       "gh-test-job-1"
+    repo_name:  "rpc-gating"
+    repo_url:   "https://github.com/rcbops/rpc-gating"
+    branch:     "master"
+    image:      "xenial"
+    scenario:   "functional"
+    action:     "test-gh"
+    jira_project_key: "RE"
+    trigger_build: "PM_{repo_name}-{branch}-{image}-{scenario}-{action}"
+    jobs:
+      - 'PM_{repo_name}-{branch}-{image}-{scenario}-{action}'
+
