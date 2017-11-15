@@ -1,0 +1,29 @@
+- project:
+    name:       "gh-test-job-1"
+    repo_name:  "rpc-gating"
+    repo_url:   "https://github.com/rcbops/rpc-gating"
+    branch:     "master"
+    image:      "xenial"
+    scenario:   "functional"
+    action:     "test-gh"
+    jira_project_key: "RE"
+    trigger_build: "PM_{repo_name}-{branch}-{image}-{scenario}-{action}"
+    jobs:
+      - 'PM_{repo_name}-{branch}-{image}-{scenario}-{action}'
+
+- project:
+    name: "gh-test-job-2"
+    repo_name: "rpc-openstack"
+    repo_url: "https://github.com/rcbops/rpc-openstack"
+    branch: "master"
+    jira_project_key: "RO"
+    image:
+      - xenial:
+          IMAGE: "Ubuntu 16.04.2 LTS prepared for RPC deployment"
+    scenario:
+      - "swift"
+    action:
+      - deploy-gh:
+          FLAVOR: "performance2-15"
+    jobs:
+      - 'PM_{repo_name}-{branch}-{image}-{scenario}-{action}'
