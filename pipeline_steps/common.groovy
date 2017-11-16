@@ -686,7 +686,7 @@ void internal_slave(body){
 
 void standard_job_slave(String slave_type, body){
   timeout(time: 6, unit: 'HOURS'){
-    common.shared_slave(){
+    shared_slave(){
       if (slave_type == "instance"){
         pubcloud.runonpubcloud(){
           body()
