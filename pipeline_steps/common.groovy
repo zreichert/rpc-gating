@@ -464,6 +464,7 @@ def prepareRpcGit(String branch = "auto", String dest = "/opt"){
 void clone_with_pr_refs(
   String repo="git@github.com:${env.ghprbGhRepository}",
   String ref="origin/pr/${env.ghprbPullId}/merge",
+  String directory='./',
   String refspec='+refs/pull/\\*:refs/remotes/origin/pr/\\*'\
                 +' +refs/heads/\\*:refs/remotes/origin/\\*'
 ){
@@ -481,6 +482,8 @@ void clone_with_pr_refs(
   print "Cloning Repo: ${repo}@${ref}"
   sshagent (credentials:['rpc-jenkins-svc-github-ssh-key']){
     sh """#!/bin/bash -xe
+      mkdir -p ${directory}
+      cd ${directory}
       # use init + fetch to avoid the "dir not empty git fail"
       git init .
       # If the git repo previously existed, we remove the origin

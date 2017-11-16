@@ -101,7 +101,11 @@
             withCredentials(common.get_cloud_creds()) {{
 
               stage('Checkout') {{
-                common.clone_with_pr_refs(env.REPO_URL, env.BRANCH)
+                common.clone_with_pr_refs(
+                  env.REPO_URL,
+                  env.BRANCH,
+                  "${{env.WORKSPACE}}/${{env.RE_JOB_REPO_NAME}}",
+                )
               }} // stage
 
               stage('Execute Pre Script') {{
