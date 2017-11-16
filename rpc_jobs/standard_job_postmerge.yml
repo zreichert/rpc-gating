@@ -60,9 +60,8 @@
           name: BRANCH
           default: "{branch}"
           description: Branch of the repo under test
-      - string:
-          name: "SLAVE_TYPE"
-          default: "container"
+      - standard_job_params:
+          SLAVE_TYPE: "{SLAVE_TYPE}"
     triggers:
       - timed: "@daily"
 
