@@ -60,6 +60,9 @@
           name: BRANCH
           default: "{branch}"
           description: Branch of the repo under test
+      - string:
+          name: "SLAVE_TYPE"
+          default: "container"
     triggers:
       - timed: "@daily"
 
@@ -84,7 +87,7 @@
       // to create failure tickets in the correct project.
       JIRA_PROJECT_KEY = "{jira_project_key}"
 
-      common.standard_job_slave("instance") {{
+      common.standard_job_slave(env.SLAVE_TYPE) {{
         // Set the default environment variables used
         // by the artifact and test result collection.
         env.RE_HOOK_ARTIFACT_DIR="${{env.WORKSPACE}}/artifacts"
