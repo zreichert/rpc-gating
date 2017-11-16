@@ -692,7 +692,9 @@ void standard_job_slave(String slave_type, body){
           body()
         }
       } else if (slave_type == "container"){
-        container = docker.build env.BUILD_TAG.toLowerCase()
+        dir("rpc-gating"){
+          container = docker.build env.BUILD_TAG.toLowerCase()
+        }
         container.inside {
           body()
         }
