@@ -89,6 +89,7 @@
         } // sshagent
       }
       library "rpc-gating@${RPC_GATING_BRANCH}"
+      timestamps(){
       common.use_node("deploy-phobos"){
         try {
           withCredentials([
@@ -197,3 +198,4 @@
           """
         }
       } // phobos node
+      } // timestamps
