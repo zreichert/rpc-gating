@@ -1043,6 +1043,11 @@ List build_creds_array(String list_of_cred_ids){
       "RPC_REPO_GPG_PUBLIC_KEY_FILE": file(
         credentialsId: "RPC_REPO_GPG_PUBLIC_KEY_FILE",
         variable: "GPG_PUBLIC"
+      ),
+      "service_account_jenkins_api_creds": usernamePassword(
+        credentialsId: "service_account_jenkins_api_creds",
+        usernameVariable: "JENKINS_USERNAME",
+        passwordVariable: "JENKINS_API_KEY"
       )
     ]
 
@@ -1132,6 +1137,25 @@ void globalWraps(Closure body){
       } // shared slave
     } // timeout
   } // timestamps
+}
+
+void prep_ansible_dynamic_inventory_env(){
+  withRequestedCredentials("cloud_creds, id_rsa_cloud10_jenkins_file"){
+    // write the clouds.yaml file
+    env.OS_CLIENT_CONFIG_FILE = writeCloudsCfg(
+      username: env.PUBCLOUD_USERNAME,
+      api_key: env.PUBCLOUD_API_KEY
+    )
+
+    // Tell ansible where to find roles
+    env.ANSIBLE_ROLES_PATH = "${env.WORKSPACE}/roles"
+
+    // Tell ansible where the dynamic inventory is
+    env.ANSIBLE_INVENTORY = "${env.WORKSPACE}/rpc-gating/scripts/ansible_v2_3_2_0_1_contrib_inventory_openstack.py"
+
+    // Tell ansible where the ssh private key is
+    env.ANSIBLE_PRIVATE_KEY_FILE = "${env.JENKINS_SSH_PRIVKEY}"
+  }
 }
 
 return this

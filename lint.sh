@@ -17,7 +17,7 @@ install(){
     virtualenv $venv
   fi
   . $venv/bin/activate
-  pip install -c constraints.txt -r test-requirements.txt >/dev/null
+  pip install -c constraints.txt -r test-requirements.txt -r requirements.txt >/dev/null
 }
 
 create_jjb_ini(){
@@ -97,6 +97,7 @@ check_jjb_lint() {
   # and its own tox.
   # Excludes NonCPS.groovy as this filename is required, but
   # not matching rpc-gating conventions
+  . $venv/bin/activate
   dirs_to_lint="pipeline_steps,rpc_jobs,scripts"
   exclude_files="NonCPS.groovy"
   python scripts/lint_jjb.py \
