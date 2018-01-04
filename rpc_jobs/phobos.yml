@@ -78,8 +78,6 @@
                 -e maas_use_api="true" \
                 -e maas_verify_status="true" \
                 -e maas_verify_wait="false" \
-                -e maas_verify_delay="60" \
-                -e maas_verify_retries="15" \
                 -e WORKSPACE="${WORKSPACE}" \
                 \\\$vars_files \
                 verify.yml
