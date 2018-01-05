@@ -1,22 +1,6 @@
 - project:
     name: 'Multi-Node-AIO-Jobs'
     series:
-      - kilo:
-          branch: kilo
-          branches: "kilo.*"
-          # There's no kilo branch on [1], but liberty-12.2 branch seems to
-          # work OK.
-          # [1] https://github.com/rcbops-qe/kibana-selenium.git
-          KIBANA_SELENIUM_BRANCH: "liberty-12.2"
-          SERIES_USER_VARS: |
-            tempest_test_sets: 'scenario defcore api heat_api smoke'
-          DEPLOY_TELEGRAF: "yes"
-      - liberty:
-          branch: liberty
-          branches: "liberty.*"
-          SERIES_USER_VARS: |
-            tempest_test_sets: 'scenario defcore api heat_api smoke'
-          DEPLOY_TELEGRAF: "yes"
       - mitaka:
           branch: mitaka
           SERIES_USER_VARS: |
@@ -67,10 +51,6 @@
     exclude:
       # Xenial builds are run for newton and above
       # as it is not supported distro before newton.
-      - series: kilo
-        image: xenial
-      - series: liberty
-        image: xenial
       - series: mitaka
         image: xenial
       # Trusty builds are not executed for master
