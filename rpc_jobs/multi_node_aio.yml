@@ -34,8 +34,6 @@
             Prepare MaaS,
             Install Tempest,
             Tempest Tests,
-            Prepare Kibana Selenium,
-            Kibana Tests
     resources:
       - none:
           GENERATE_TEST_NETWORKS: "0"
@@ -120,8 +118,6 @@
     triggers:
       - timed: "{CRON}"
     parameters:
-      - kibana_selenium_params:
-          KIBANA_SELENIUM_BRANCH: "{branch}"
       - rpc_gating_params
       - tigkstack_params:
           DEPLOY_TELEGRAF: "{DEPLOY_TELEGRAF}"
@@ -165,8 +161,6 @@
               Tempest Tests
               Prepare Horizon Selenium
               Horizon Tests
-              Prepare Kibana Selenium
-              Kibana Tests
               Leapfrog Upgrade
               Pause (use to hold instance for investigation before cleanup)
               Cleanup
@@ -180,10 +174,6 @@
       library "rpc-gating@${{RPC_GATING_BRANCH}}"
       common.shared_slave(){{
         try {{
-          // set kibana branch to newton for leapfrogs, see RE-677
-          if (env.ACTION == "leapfrogupgrade" ){{
-              env.KIBANA_SELENIUM_BRANCH="newton"
-          }}
           instance_name = common.gen_instance_name()
           deploy_node = null
           pubcloud.getPubCloudSlave(instance_name: instance_name)

@@ -157,16 +157,6 @@
             workspace. The clone source is always rcbops/rpc-gating.
 
 - parameter:
-    name: kibana_selenium_params
-    parameters:
-      - string:
-          name: "KIBANA_SELENIUM_REPO"
-          default: "https://github.com/rcbops-qe/kibana-selenium.git"
-      - string:
-          name: "KIBANA_SELENIUM_BRANCH"
-          default: "{KIBANA_SELENIUM_BRANCH}"
-
-- parameter:
     name: rpc_maas_params
     parameters:
       - string:
