@@ -159,8 +159,6 @@
               Prepare MaaS
               Install Tempest
               Tempest Tests
-              Prepare Horizon Selenium
-              Horizon Tests
               Leapfrog Upgrade
               Pause (use to hold instance for investigation before cleanup)
               Cleanup
@@ -218,9 +216,6 @@
                 "tempest": {{
                   tempest.tempest()
                 }},
-                "horizon": {{
-                  horizon.horizon_integration()
-                }}
               ) // parallel
             }} finally {{
               common.rpco_archive_artifacts("MNAIO")

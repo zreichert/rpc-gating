@@ -59,8 +59,6 @@
               Prepare MaaS
               Install Tempest
               Tempest Tests
-              Prepare Horizon Selenium
-              Horizon Tests
               Pause (use to hold instance for investigation before cleanup)
               Cleanup
               Destroy Slave
