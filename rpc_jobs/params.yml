@@ -140,10 +140,6 @@
           name: "USER_VARS"
           default: "{USER_VARS}"
           description: "OSA/RPC USER_VARS to inject for this build"
-      - string:
-          name: "UPGRADE_FROM_REF"
-          default: "{UPGRADE_FROM_REF}"
-          description: "An tag/sha/ref to upgrade from"
 
 - parameter:
     name: rpc_gating_params

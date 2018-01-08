@@ -74,15 +74,6 @@
   * Ceph Func
 * Node: Newly created slave
 
-## Upgrade
-* Purpose: Upgrade an existing deploy
-* Inputs:
-  * Version to upgrade to latest or designated tag
-* Outputs:
-  * Logs, upgrade artifacts
-  * Output from test VMs, network ping tests, etc.
-* Node: Newly created slave
-
 ## Push Public Artifacts
 * Purpose: Push artifacts that may be reused in future deployments up to the public repo servers.
 * Inputs:

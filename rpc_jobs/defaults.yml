@@ -17,7 +17,6 @@
     CONTEXT_USER_VARS: ""
     TRIGGER_USER_VARS: ""
     SERIES_USER_VARS: ""
-    UPGRADE_FROM_REF: ""
     credentials: ""
     skip_pattern: ""
     # jenkins_node_params

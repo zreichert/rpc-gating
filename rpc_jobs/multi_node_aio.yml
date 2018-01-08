@@ -13,7 +13,6 @@
             lxc_container_vg_name: "USE_DIR_NOT_VG"
             glance_default_store: "swift"
             neutron_legacy_ha_tool_enabled: true
-          UPGRADE_FROM_REF: "kilo"
           DEPLOY_TELEGRAF: "yes"
       # NOTE(mattt): master builds are currently failing since rpco no longer
       #              uses submodules.  Disabling temporarily since no one is
@@ -144,7 +143,6 @@
             {CONTEXT_USER_VARS}
             {SERIES_USER_VARS}
             {TRIGGER_USER_VARS}
-          UPGRADE_FROM_REF: "{UPGRADE_FROM_REF}"
       - string:
           name: STAGES
           default: "{DEFAULT_STAGES}, {ACTION_STAGES}, {TRIGGER_STAGES}"
@@ -159,7 +157,6 @@
               Prepare MaaS
               Install Tempest
               Tempest Tests
-              Leapfrog Upgrade
               Pause (use to hold instance for investigation before cleanup)
               Cleanup
               Destroy Slave
@@ -209,9 +206,6 @@
               deploy.deploy_sh(
                 environment_vars: environment_vars
               ) // deploy_sh
-              if (env.STAGES.contains("Leapfrog Upgrade")) {{
-                deploy.upgrade_leapfrog(environment_vars: environment_vars)
-              }}
               parallel(
                 "tempest": {{
                   tempest.tempest()

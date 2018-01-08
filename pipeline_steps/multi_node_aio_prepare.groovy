@@ -2,11 +2,7 @@ def prepare() {
   common.conditionalStage(
     stage_name: 'Prepare Multi-Node AIO',
     stage: {
-      if (env.STAGES.contains("Leapfrog Upgrade")) {
-        common.prepareRpcGit(env.UPGRADE_FROM_REF, "/opt")
-      } else {
-        common.prepareRpcGit("auto", "/opt")
-      }
+      common.prepareRpcGit("auto", "/opt")
       dir("/opt/rpc-openstack"){
         osa_commit = sh (script: """#!/bin/bash -x
             git_submodule=\$(git submodule status openstack-ansible)

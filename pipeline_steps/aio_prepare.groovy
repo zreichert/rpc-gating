@@ -2,12 +2,7 @@ def prepare(){
   common.conditionalStage(
     stage_name: "Prepare Deployment",
     stage: {
-      if (env.STAGES.contains("Major Upgrade")
-          || env.STAGES.contains("Leapfrog Upgrade")) {
-        common.prepareRpcGit(env.UPGRADE_FROM_REF)
-      } else {
-        common.prepareRpcGit()
-      }
+      common.prepareRpcGit()
       dir("/opt/rpc-openstack"){
         withEnv( common.get_deploy_script_env() + [
           "DEPLOY_AIO=yes",
