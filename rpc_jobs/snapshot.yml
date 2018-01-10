@@ -18,16 +18,20 @@
             PM_rpc-openstack-newton-xenial-swift-deploy
             The image will be rpc_${rpc_release}_xenial.
             rpc_release can be found in:
-            rpc-openstack/rpc-openstack/etc/openstack_deploy/group_vars/all/release.yml
+            rpc-openstack/etc/openstack_deploy/group_vars/all/release.yml
 
       - bool:
           name: BUILD_FROM_SNAPSHOT
           description: |
-            Build instance from RPCO snapshot and run tempest.
-            Note that the IMAGE parameter should contain the
-            name of the snapshot to build from. The IMAGE
-            paramter is not passed through to the RPC AIO job,
-            which will use its own default image.
+            Build instance from RPCO snapshot and run tempest. Note that the
+            IMAGE parameter should contain the name of the snapshot to build
+            from. The INITIAL_BUILD_IMAGE paramter is  passed through to the
+            first job, that is used to create the snapshot
+
+            Note on flavor: Only flavors that don't have ephemeral storage
+            should be used, as ephemeral storage is not stored when
+            snapshots are created. general1-8 is a good choice when large
+            enough, otherwise the old standard 15 (id: 7) can be used.
           default: true
       - instance_params:
           IMAGE: "CHANGEME:rpc_rx.y.x_distro"
@@ -36,8 +40,22 @@
           FALLBACK_REGIONS: ""
       - string:
           name: RPC_GATING_BRANCH
-          default: "RE-35"
+          default: "master"
           description: Version of rpc-gating to use.
+      - string:
+          name: RPCO_BRANCH
+          default: "newton"
+          description: Version for RPCO to deploy
+      - choice:
+          name: INITIAL_BUILD_IMAGE
+          default: "Ubuntu 16.04.2 LTS prepared for RPC deployment"
+          choices:
+            - "Ubuntu 16.04.2 LTS prepared for RPC deployment"
+            - "Ubuntu 14.04.5 LTS prepared for RPC deployment"
+          description: |
+            The image to use for the initial build from which the snapshot
+            will be taken. Note that xenial is not supported before newton.
+
     dsl: |
       library "rpc-gating@${RPC_GATING_BRANCH}"
       env.STAGES="Allocate Resources, Connect Slave, Cleanup, Destroy Slave"
@@ -52,7 +70,7 @@
                 [
                   $class: 'StringParameterValue',
                   name: 'FLAVOR',
-                  value: "general1-8"
+                  value: env.FLAVOR
                 ],
                 [
                   $class: 'StringParameterValue',
@@ -67,17 +85,22 @@
                 [
                   $class: 'StringParameterValue',
                   name: 'RPC_GATING_BRANCH',
-                  value: "RE-35"
+                  value: env.RPC_GATING_BRANCH
                 ],
                 [
                   $class: 'StringParameterValue',
                   name: 'BRANCH',
-                  value: "RE-35"
+                  value: env.RPCO_BRANCH
                 ],
                 [
                   $class: 'BooleanParameterValue',
                   name: 'SNAPSHOT',
                   value: true
+                ],
+                [
+                  $class: 'StringParameterValue',
+                  name: 'IMAGE',
+                  value: env.INITIAL_BUILD_IMAGE
                 ]
               ]
             )
