@@ -170,6 +170,13 @@ def update_rc_branch(ctx, mainline, rc):
     3. Create rc branch from head of mainline
     4. Enable branch protection with skeleton or previously stored settings.
     """
+
+    if mainline == rc:
+        raise ValueError("Specifying the same branch for mainline and rc"
+                         " will result in dataloss. The mainline branch"
+                         " will be deleted, then the rc branch will be"
+                         " created from the now non-existent mainline branch")
+
     repo = ctx.obj
     rc = try_context(repo, rc, "rc", "rc_ref")
     branch_protection_enabled = False
