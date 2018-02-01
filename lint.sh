@@ -17,6 +17,7 @@ install(){
     virtualenv $venv
   fi
   . $venv/bin/activate
+
   pip install -c constraints.txt -r test-requirements.txt >/dev/null
 }
 
