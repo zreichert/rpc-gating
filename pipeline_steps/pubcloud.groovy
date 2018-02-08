@@ -237,8 +237,11 @@ def runonpubcloud(Map args=[:], Closure body){
 }
 
 def uploadToSwift(Map args){
-  if(fileExists("${WORKSPACE}/artifacts")){
-    print("WORKSPACE/artifacts directory found, Preparing to upload artifacts.")
+  if (env.RE_HOOK_ARTIFACT_DIR == null) {
+    env.RE_HOOK_ARTIFACT_DIR = "${WORKSPACE}/artifacts"
+  }
+  if (fileExists(env.RE_HOOK_ARTIFACT_DIR)) {
+    print("Job artifact directory ${env.RE_HOOK_ARTIFACT_DIR} found. Preparing to upload job artifacts.")
     withCredentials(common.get_cloud_creds()) {
       clouds_cfg = common.writeCloudsCfg(
         username: env.PUBCLOUD_USERNAME,
@@ -255,7 +258,7 @@ def uploadToSwift(Map args){
       } // withEnv
     } // withCredentials
   } else {
-    print("WORKSPACE/artifacts not found, skipping artifact upload")
+    print("Job artifact directory ${env.RE_HOOK_ARTIFACT_DIR} not found. Skipping job artifact upload.")
   }
 }
 
