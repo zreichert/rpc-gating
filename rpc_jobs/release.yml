@@ -55,7 +55,7 @@
                     --ref "${RC_BRANCH}" \
                 publish_tag \
                     --ref "${RC_BRANCH}" \
-                    --version "${VERSION}" \
+                    --tag-name "${VERSION}" \
                 generate_release_notes \
                     --version "${VERSION}" \
                     --prev-version "${PREVIOUS_VERSION}" \
@@ -64,7 +64,7 @@
                     --script "optional:gating/generate_release_notes/post" \
                     --out-file "${RELEASE_NOTES_FILE}" \
                 create_release \
-                    --version "${VERSION}" \
+                    --from-tag "${VERSION}" \
                     --bodyfile "${RELEASE_NOTES_FILE}" \
                 update_rc_branch \
                     --rc "${RC_BRANCH}" \

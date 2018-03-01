@@ -142,9 +142,9 @@ def generate_release_notes(scripts, rnfile, text, version, prev_version,
 
 @click.command()
 @click.option(
-    '--version',
+    '--tag-name',
     required=True,
-    help="Symbolic name of Release (eg r14.1.99)"
+    help="Name of tag to create (eg r14.1.99)"
 )
 @click.option(
     '--ref',
@@ -154,19 +154,18 @@ def generate_release_notes(scripts, rnfile, text, version, prev_version,
 @click.option(
     "--clone-dir",
     help="Root of the repo dir. May be omitted if clone was used earlier"
-         " in the chain."
+         " in the chain.",
 )
-def publish_tag(version, ref, clone_dir):
+def publish_tag(tag_name, ref, clone_dir):
     ctx_obj = click.get_current_context().obj
-    ctx_obj.version = version
+    ctx_obj.version = tag_name
     ref = try_context(ctx_obj, ref, "ref", "rc_ref")
     clone_dir = try_context(ctx_obj, clone_dir, "clone_dir", "clone_dir")
-
     repo = git.Repo(clone_dir)
-    repo.create_tag(version, ref, message=version)
-    repo.remotes.origin.push(version)
+    repo.create_tag(tag_name, ref, message=tag_name)
+    repo.remotes.origin.push(tag_name)
     logger.info(
-        "Tag '{tag}' successfully pushed to repository.".format(tag=version)
+        "Tag '{tag}' successfully pushed to repository.".format(tag=tag_name)
     )
 
 
