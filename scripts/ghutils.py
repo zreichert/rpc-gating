@@ -260,8 +260,10 @@ def update_rc_branch(ctx, mainline, rc):
 @cli.command()
 @click.pass_obj
 @click.option(
-    '--version',
-    help="Symbolic name of Release (eg r14.1.99)"
+    '--from-tag',
+    help="Tag to create release from. This tag should already exist or be "
+    "created by the create_tag function. (eg r14.1.99)",
+    required=True
 )
 @click.option(
     '--bodyfile',
@@ -269,7 +271,7 @@ def update_rc_branch(ctx, mainline, rc):
     required=True
     # Can't use type=click.File because the file may not exist on startup
 )
-def create_release(repo, version, bodyfile):
+def create_release(repo, from_tag, bodyfile):
     ctx_obj = click.get_current_context().obj
     # Attempt to read release_notes from context
     # They may have been set by release.generate_release_notes
@@ -282,16 +284,15 @@ def create_release(repo, version, bodyfile):
         ))
         click.get_current_context().exit(-1)
 
-    version = try_context(ctx_obj, version, "version", "version")
     # Store version in context for use in notifications
-    ctx_obj.version = version
+    ctx_obj.version = from_tag
     try:
         release = repo.create_release(
-            tag_name=version,
-            name=version,
+            tag_name=from_tag,
+            name=from_tag,
             body=release_notes,
         )
-        logger.info("Release {} created.".format(version))
+        logger.info("Release {} created.".format(from_tag))
     except github3.models.GitHubError as e:
         logger.error("Error creating release: {}".format(e))
         if e.code == 422:
